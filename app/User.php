@@ -39,6 +39,6 @@ class User extends Authenticatable
 
     public function messages()
     {
-        return $this->belongsToMany(Message::class,'user_messages');
+        return $this->belongsToMany(Message::class,'user_messages')->orderBy('id','DESC');
     }
 }

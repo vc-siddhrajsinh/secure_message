@@ -74,7 +74,11 @@ class MessageController extends Controller
                 if (!$message['status']) {
                     throw new \Exception("Something went wrong to create message. Please try after some time.");
                 }
-                return redirect()->route("frontend.messages.index")->withFlashSuccess("Message created successfully.");
+
+                $link = route('frontend.message.show',$message['data']['token']);
+
+                session()->put('link',$link);
+                return redirect()->route('frontend.messages.create');
             }
             return redirect()->route("frontend.guest.login",[$message['data']['token']]);
         } catch (\Exception $ex) {
