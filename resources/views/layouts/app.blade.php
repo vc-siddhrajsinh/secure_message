@@ -37,14 +37,15 @@
                         @endif
                     @else
 
-                    <li >
-                        <a class="nav-link" href="javascript:;">{{ Auth::user()->name }}</a>
+                    <li class="user-name-li">
+                        <p class="user-name"  ><i class="fa fa-user"></i>{{ Auth::user()->name }}</p>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        <a class="logout-btn" href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                                            <i class="fa fa-power-off"></i>
+                            <!-- {{ __('Logout') }} -->
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -62,9 +63,10 @@
     <!-- Scripts -->
     @stack('before-scripts')
     {{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
-    
+
     <script src="{{ asset('js/jquery.min.js') }}" ></script>
     <script src="{{ asset('js/jquery.validate.min.js') }}" ></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}" ></script>
     @stack('after-scripts')
 

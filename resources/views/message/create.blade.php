@@ -20,6 +20,20 @@
     <script type="text/javascript">
         jQuery(document).ready(function () {
             jQuery("#messages_form").validate();
+
+            jQuery(".isPrivate").click(function () {
+
+               if (jQuery(this).val() != 1){
+                   jQuery("#password-div").hide();
+                   jQuery("#password").removeClass("required");
+                   jQuery("#password").val("");
+               } else {
+                   jQuery("#password-div").show();
+                   jQuery("#password").addClass("required");
+               }
+
+            });
         })
+
     </script>
 @endpush
