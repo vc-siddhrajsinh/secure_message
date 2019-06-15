@@ -17,7 +17,6 @@ class CreateUserMessagesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('user_id')->comment("user id");
             $table->unsignedInteger('message_id')->comment("message id");
-            $table->timestamps();
         });
     }
 

@@ -23,8 +23,8 @@ class CreateMessagesTable extends Migration
             $table->enum('type',['1','2','3'])->default("1")->comment("message type 1 = text, 2 = image, 3 = video");
             $table->enum('is_read',['0','1'])->default("0")->comment("message read status  1 = yes , 0 = no");
             $table->dateTime('read_at')->nullable()->comment("message read date time");
-            $table->dateTime('password')->nullable()->comment("message read date time");
-            $table->smallInteger('duration')->comment("message duration");
+            $table->dateTime('password')->nullable()->comment("message encrypt password");
+            $table->integer('duration')->comment("message duration");
             $table->timestamps();
         });
     }

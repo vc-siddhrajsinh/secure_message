@@ -74,8 +74,20 @@
 @endsection
 @push("after-scripts")
     <script type="text/javascript">
-        jQuery(document).ready(function () {
-            jQuery("#login-frm").validate();
-        })
+            jQuery(document).ready(function () {
+                $("#login-frm").validate({
+                    rules: {
+                        username: {
+                            required: true,
+                        },
+                        password: {
+                            required: true,
+                        }
+                    },errorPlacement: function(){
+                        return false;
+                    }
+
+                });
+            })
     </script>
 @endpush

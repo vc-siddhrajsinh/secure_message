@@ -7,11 +7,12 @@ use App\Http\Requests\MessageStore;
 use App\Http\Requests\MessageUpdate;
 use App\Repositories\Frontend\MessageRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+
 
 class MessageController extends Controller
 {
     protected $message;
+
     /**
      * Create a new controller instance.
      *
@@ -19,7 +20,7 @@ class MessageController extends Controller
      */
     public function __construct(MessageRepository $message)
     {
-        $this->middleware('auth')->except("readMessage" ,"guestLogin","store");
+        $this->middleware('auth')->except("readMessage", "guestLogin", "store", "create");
         $this->message = $message;
     }
 
@@ -30,14 +31,15 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $message =  $this->message->getAllMessage();
+        $message = $this->message->getAllMessage();
         return view('message.home')->withMessage($message ?? []);
     }
 
     public function guestLogin()
     {
-        return view('message.create');
+        return view('message.guestIndex');
     }
+
 
     public function readMessage(Request $request)
     {
@@ -46,43 +48,26 @@ class MessageController extends Controller
 
     public function store(MessageStore $request)
     {
-        try{
-
-            $data = $request->all();
-            $data['ip_addr'] = request()->ip();
-            $data['is_read'] = "0";
-            $data['user_type'] = (isset(auth()->user()->id) && !empty(auth()->user()->id) )? "1" :"0";
-
-            if(isset($request->password) && !empty($request->password))
-                $data['password'] = encrypt($request->password);
-
-            $data['content'] = encrypt($request->content);
-            $data['token'] =(string) Str::uuid();
-            $data['duration'] = now()->addMinute($request->duration)->timestamp;
-            unset($data['_token']);
-
-            $message = $this->message->createMessage($data);
-
-
-            if(!$message['status'])
-            {
+        try {
+            $message = $this->message->createMessage($request->all());
+            if (!$message['status']) {
                 throw new \Exception("Something went wrong to create message. Please try after some time.");
             }
-
-            return redirect()->route("frontend.messages.index")->withFlashSuccess("Message created successfully.");
-        } catch (\Exception $ex)
-        {
+            if (auth()->user()) {
+                return redirect()->route("frontend.messages.index")->withFlashSuccess("Message created successfully.");
+            }
+            return redirect()->route("frontend.guest.login")->withFlashSuccess("Message created successfully.")->withMessage($message['data']);
+        } catch (\Exception $ex) {
             return back()->withErrors($ex->getMessage());
         }
     }
 
-    public function update(MessageUpdate $request)
+    public function update(MessageUpdate $request, $id)
     {
-        try{
-
+        try {
+            $message = $this->message->updateMessage($id, $request->all());
             return redirect()->route("frontend.messages.index")->withFlashSuccess("Message updates successfully.");
-        } catch (\Exception $ex)
-        {
+        } catch (\Exception $ex) {
             return back()->withErrors($ex->getMessage());
         }
     }
@@ -93,13 +78,30 @@ class MessageController extends Controller
         return view('message.create');
     }
 
-    public function edit()
+    public function edit(Request $request, $id)
     {
-        return view('message.edit');
+        try {
+            $message = $this->message->getMessageByField($id, "token");
+            if (!$message['status']) {
+                throw new \Exception("Something went wrong to edit message. Please try after some time.");
+            }
+            return view('message.edit')->withMessage($message);
+        } catch (\Exception $ex) {
+            return back()->withErrors($ex->getMessage());
+        }
+
     }
 
-    public function destroy()
+    public function destroy(Request $request, $id)
     {
-        return view('message.edit');
+        try {
+            $message = $this->message->deleteMessageByField($id, "token");
+            if (!$message['status']) {
+                throw new \Exception("Something went wrong to edit message. Please try after some time.");
+            }
+            return view('message.edit')->withMessage($message);
+        } catch (\Exception $ex) {
+            return back()->withErrors($ex->getMessage());
+        }
     }
 }
