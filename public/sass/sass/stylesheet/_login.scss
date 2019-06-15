@@ -1,3 +1,6 @@
+body{
+    overflow: hidden;
+}
 .page-section{
     width: 100%;
     margin: 0 auto;
@@ -23,6 +26,7 @@
         border-radius: 10px;
         overflow: hidden;
         padding: 65px 55px;
+        z-index: 10;
         .login-form{
             width: 100%;
             .logo{
