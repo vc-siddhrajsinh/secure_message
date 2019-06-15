@@ -47,7 +47,7 @@ class MessageController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function guestLogin($token)
+    public function guestLogin($token = '')
     {
         return view('message.guestIndex',compact('token'));
     }
@@ -68,18 +68,17 @@ class MessageController extends Controller
     public function store(MessageStore $request)
     {
         try {
+            $message = $this->message->createMessage($request->all());
             if(auth()->user()) {
-                $message = $this->message->createMessage($request->all());
+
                 if (!$message['status']) {
                     throw new \Exception("Something went wrong to create message. Please try after some time.");
                 }
                 return redirect()->route("frontend.messages.index")->withFlashSuccess("Message created successfully.");
             }
-            $message = $this->message->createMessageWithoutStore($request);
-
-            return redirect()->route("frontend.guest.login",[$message['data']]);
+            return redirect()->route("frontend.guest.login",[$message['data']['token']]);
         } catch (\Exception $ex) {
-            
+
             \Log::error($ex->getMessage());
             return back()->withErrors($ex->getMessage());
         }
@@ -164,9 +163,7 @@ class MessageController extends Controller
     public function show($token)
     {
         try {
-            if(auth()->user()){
-                return $this->message->getMessageByToken($token);
-            }
+            return $this->message->getMessageByToken($token);
 
         }catch (\Exception $ex) {
             \Log::error($ex->getMessage());

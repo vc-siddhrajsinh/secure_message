@@ -101,6 +101,9 @@ class MessageRepository extends BaseRepository
 
             if($response) {
                 $message = decrypt($response->content);
+                if(!auth()->user()){
+                    $response->delete();
+                }
                 return view('message.message-view',compact('message'));
             } else {
 
@@ -126,10 +129,7 @@ class MessageRepository extends BaseRepository
             $data = [];
             $token = (string) Str::uuid();
             $data['content'] = $request->content ?? '';
-            $data['isPrivate'] = $request->isPrivate ?? '';
-            $data['type'] = $request->type ?? '';
             $data['duration'] = now()->addMinute($request->duration)->timestamp ?? '';
-            $data['password'] = $data['password'] ?? '';
             $data['token'] = $token;
 
             return ['status' => true, "data" => encrypt(json_encode($data))];
