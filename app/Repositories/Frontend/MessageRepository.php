@@ -32,7 +32,7 @@ class MessageRepository extends BaseRepository
             $message = $this->create($data);
 
             if(auth()->user()) {
-                auth()->user()->messages()->sync($message);
+                auth()->user()->messages()->attach($message);
             }
             return ['status' => true, "data" => $message];
 
@@ -43,11 +43,17 @@ class MessageRepository extends BaseRepository
     }
 
 
-    public function updateMessage($id, $data)
+    public function updateMessage($token, $data)
     {
         try {
-            $user = $this->updateById($id, $data);
-            return ['status' => true, "data" => $user];
+            $message = $this->where('token',$token)->first();
+
+            if($message) {
+                $message->content = encrypt($data['content']);
+                $message->save();
+            }
+            
+            return ['status' => true, "data" => $message];
         } catch (Exception  $ex) {
             return ['status' => false, "message" => $ex->getMessage()];
         }
@@ -77,10 +83,34 @@ class MessageRepository extends BaseRepository
                 throw new \Exception("Something went wrong to edit message. Please try after some time.");
             }
             $message = $this->deleteById($current['data']->id);
-
+            if(auth()->user()) {
+                auth()->user()->messages()->detech($message);
+            }
             return ['status' => true, "data" => $message];
         } catch (Exception  $ex) {
             return ['status' => false, "message" => $ex->getMessage()];
+        }
+    }
+
+    public function getMessageByToken($token)
+    {
+        try {
+            $response = $this->where('token',$token)->first();
+
+            if($response) {
+                $message = decrypt($response->content);
+                return view('message.message-view',compact('message'));
+            } else {
+
+                $message = 'This message not longer available';
+                return view('message.message-view',compact('message'));
+            }
+
+        } catch (\Exception $ex) {
+            \Log::error($ex->getMessage());
+
+            $message = 'This message not longer available';
+            return view('message.message-view',compact('message'));
         }
     }
 }
