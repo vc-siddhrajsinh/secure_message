@@ -19,9 +19,20 @@
 
 Route::group(["namespace" => "Frontend", 'as' => 'frontend.'], function() {
     Route::get('/guest', "MessageController@guestLogin")->name("guest.login");
+
     Route::get('/', "MessageController@index");
     Route::get('/home', "MessageController@home")->name('home');
-    Route::get('/home', 'MessageController@index')->name('home');
+    Route::get('/home', 'MessageController@index')->name('message.index');
+
+    Route::resource("messages","MessageController");
+    /*Route::get('/message-create', "MessageController@create")->name("message.create");
+    Route::post('/message-save', "MessageController@store")->name("message.store");
+    Route::get('/message-edit', "MessageController@edit")->name("message.edit");
+    Route::put('/message-update', "MessageController@update")->name("message.update");
+    Route::delete('/message-delete', "MessageController@destroy")->name("message.destroy");*/
+
+
+
 });
 
 
