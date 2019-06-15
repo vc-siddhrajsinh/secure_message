@@ -6,7 +6,7 @@
             @if(isset($messages) && count($messages))
                 @foreach($messages as $message)
                 <div class="col-md-4 noted-card">
-<<<<<<< HEAD
+
                     <div class="card">
                         <div class="card-header">
                             <h3>{{__("Message")}} </h3>
