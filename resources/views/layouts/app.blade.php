@@ -25,11 +25,12 @@
                     <!-- Authentication Links -->
                     @guest
                         <li >
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        <li >
                             <a class="nav-link" href="{{ route('frontend.guest.login') }}">{{ __('Guest Login') }}</a>
                         </li>
+                        <li >
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        
                         @if (Route::has('register'))
                             <li >
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>

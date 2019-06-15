@@ -26,6 +26,7 @@ body, html {
     bottom:0;
     left:0;
     background: #015871;
+    z-index: 0;
     .wave {
         background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x; 
         position: absolute;
@@ -86,6 +87,7 @@ body, html {
         font-weight: 300;
         overflow: hidden;
         padding: 15px;
+        text-decoration: none;
     }
     .navbar-custom-menu{
         float: right;
@@ -124,6 +126,9 @@ body, html {
                     &:hover{
                        color: #e20000;
                     }
+                }
+                .nav-link{
+                    color: #ffffff;
                 }
             }
         }

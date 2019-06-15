@@ -6,42 +6,38 @@
             @if(isset($messages) && count($messages))
                 @foreach($messages as $message)
                 <div class="col-md-4 noted-card">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>{{__("Message")}} </h3>
-                        <div class="dropdown">
-                            <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-ellipsis-v"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                @php $element = 'input_link_'.$message->id @endphp
-                                <a class="dropdown-item" data-id="{{ 'input_link_'.$message->id }}" href="javascript:void(0)" onclick="copyLink('@php echo $element@endphp');">Copy Link</a>
-                                <p style="display: none" id="input_link_{{ $message->id }}" >{{ route('frontend.message.show',[$message->token]) }}</p>
-                                <a class="dropdown-item" href="{{route("frontend.messages.edit", $message->token)}}" class="btn btn-sm">{{__('Edit')}}</a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="removeMessge(this)" data-id="{{$message->token}}"  class="btn btn-sm">{{__('Delete')}}</a>
-                            </div>
+<<<<<<< HEAD
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>{{__("Message")}} </h3>
+                            <div class="dropdown">
+                                <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    @php $element = 'input_link_'.$message->id @endphp
+                                    <a class="dropdown-item" data-id="{{ 'input_link_'.$message->id }}" href="javascript:void(0)" onclick="copyLink('@php echo $element@endphp');">Copy Link</a>
+                                    <p style="display: none" id="input_link_{{ $message->id }}" >{{ route('frontend.message.show',[$message->token]) }}</p>
+                                    <a class="dropdown-item" href="{{route("frontend.messages.edit", $message->token)}}" class="btn btn-sm">{{__('Edit')}}</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="removeMessge(this)" data-id="{{$message->token}}"  class="btn btn-sm">{{__('Delete')}}</a>
+                                </div>
+                            </div>                            
+                        </div>                    
+                        <div class="card-body">
+                            {!! decrypt($message->content) !!}
+                
                         </div>
-                        
                     </div>
-                    
-                    <div class="card-body">
-                        {!! decrypt($message->content) !!}
-                    </div>
-                </div>
                 </div>
 
                 @endforeach
             @else
-                <div class="col-md-4 noted-card">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3>{{__("Message")}} </h3>
-                        </div>
-                        <div class="card-body">
-                            {{__("You didn't have any messages")}}
-                        </div>
+                <div class="no-data">
+                    <div class="no-data-box">
+                        
+                        {{__("You didn't have any messages")}}
                     </div>
-            </div>
+                 </div>
             @endif
             
         </div>
