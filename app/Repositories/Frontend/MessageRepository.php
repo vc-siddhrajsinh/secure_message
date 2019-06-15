@@ -16,8 +16,12 @@ class MessageRepository extends BaseRepository
     public function createMessage($data)
     {
         try {
-            $user = $this->create($data);
-            return ['status' => true, "data" => $user];
+            $message = $this->create($data);
+
+            if(auth()->user()) {
+                auth()->user()->messages()->sync($message);
+            }
+            return ['status' => true, "data" => $message];
         } catch (Exception  $ex) {
             dd($ex->getMessage());
             return ['status' => false, "message" => $ex->getMessage()];
