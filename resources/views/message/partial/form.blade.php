@@ -8,24 +8,28 @@
 
     <div class="input-field">
         <span class="label-input">{{ __('Message') }}</span>
-        <textarea class="input-box msg-content required" type="text" name="content" placeholder="{{ __('Content') }}" required>{{  $content }}</textarea>
+        <textarea class="input-box msg-content required" type="text" name="content" placeholder="{{ __('Message') }}" required>{{  $content }}</textarea>
     </div>
     @if(!$edit)
 
-
+        @guest
+        <input type="radio" style="display:none" name="isPrivate" value="0" class="" />
+    
+    @else
     <div class="input-field">
         <span class="label-input">{{ __('Privacy') }}</span>
         <div class="readio-box">
             <label class="radiobox">
-                <input type="radio" name="isPrivate" value="0" class="" />
+                <input type="radio" name="isPrivate" value="0" class="isPrivate" checked="checked"/>
                 <span>{{__('Public')}}</span>
             </label>
             <label class="radiobox">
-                <input type="radio" name="isPrivate" value="1" class="" />
+                <input type="radio" name="isPrivate" value="1" class="isPrivate" />
                 <span>{{__('Private')}}</
             </label>
         </div>
     </div>
+    @endguest
 
     <div class="input-field" style="display: none">
         <span class="label-input">{{ __('Type') }}</span>
@@ -47,9 +51,9 @@
         </select>
     </div>
 
-    <div class="input-field">
+    <div class="input-field" id="password-div" style="display:none;">
         <span class="label-input">{{ __('Password') }}</span>
-        <input type="password" name="password" class="input-box " placeholder="{{  __("Password") }}">
+        <input type="password" name="password" id="password" class="input-box " placeholder="{{  __("Password") }}">
     </div>
     @endif
     <div class="input-field mb-0">
@@ -57,7 +61,7 @@
             <button class="msg-submit-btn btn waves-effect" type="submit">
                 {{ __('Submit') }}
             </button>
-            <a class="msg-cancel-btn btn btn-danger waves-effect" href="{{route("frontend.messages.index")}}">
+            <a class="msg-cancel-btn btn  waves-effect" href="{{route("frontend.messages.index")}}">
                 {{ __('Cancel') }}
             </a>
         </div>

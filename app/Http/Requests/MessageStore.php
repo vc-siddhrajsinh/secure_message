@@ -24,15 +24,14 @@ class MessageStore extends FormRequest
      */
     public function rules(Request $request)
     {
-        return [];
-//        dd($request->all());
-        /*return [
+        return [
             "content" => "required",
             "isPrivate" => "required|integer|in:0,1",
             "type" => "required|integer|in:1,2,3",
             "duration" => "required|integer",
-            "password" => "required_if:isPrivate,1|min:4",
-        ];*/
+            "password" => "required_if:isPrivate,1",
+//            "password" => "required_if:isPrivate,1|min:4",
+        ];
     }
 
     public function messages()
@@ -47,8 +46,8 @@ class MessageStore extends FormRequest
             "type.in" => "The message type must be in Text, Image or Video.",
             "duration.required" => "The message duration field is required.",
             "duration.integer" => "Please select valid message duration options.",
-            "password.required" => "The password field is required.",
-            "password.min" => "The password length must be minimum 4 character.",
+            "password.required_if" => "The password field is required.",
+            "password.min" => "The password length must be minimum :min character.",
         ];
     }
 }
