@@ -12,8 +12,56 @@ body{
             padding-top: 15px;
         }
         .noted-card{
+            padding-bottom: 30px;
             .card{
-                border-radius: 10px;
+                border-radius: 5px;
+                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+                box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+                transition: .7s;
+                background: #ddf2f5 url(../img/box-patter-5.svg);
+                background-repeat: no-repeat;
+                background-position: right -2px bottom -3px;
+                .card-header{
+                    border-bottom: 0;
+                    font-weight: 600;
+                    padding-bottom: 5px;
+                    display: flex;
+                    align-items: center;
+                    padding-right: 30px;
+                    position: relative;
+                    h3{
+                        margin: 0;
+                        font-size: 18px;
+                    }
+                    .dropdown{                        
+                        position: absolute;
+                        right: 0px;
+                        .dropdown-toggle{
+                            background: transparent;
+                            padding: 0px 5px;
+                            width: 40px;
+                            outline: none !important;
+                            .fa{
+                                font-size: 18px;
+                            }
+                            &:focus{
+                                outline: none;
+                                box-shadow: none;
+                            }
+                            &:after{
+                                display: none;
+                            } 
+                        }
+                    }
+                }
+                .card-body{
+                    padding-top: 5px;
+                    font-size: 14px;
+                }
+                &:hover{
+                    box-shadow: 0px 0px 60px 0px rgba(0, 163, 211, 0.6);
+                }
+                
             }
         }
     }
