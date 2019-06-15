@@ -1,0 +1,14 @@
+body{
+    overflow: hidden;
+}
+.page-section{
+    &.home-page{
+        width: 100%;
+        min-height: 100vh;
+        padding: 15px 0;
+        padding-top: 70px;
+        .container-fluid{
+            padding-top: 15px;
+        }
+    }
+}

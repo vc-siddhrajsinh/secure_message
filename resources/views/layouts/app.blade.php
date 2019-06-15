@@ -11,16 +11,62 @@
         href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/stylesheet.css')}}">
     @stack('after-styles')
 </head>
 <body>
-@yield('content')
+    <div id="app">
+        <header class="main-header">
+            <a class="logo" href="{{ url('/') }}">
+                {{ config('app.name', 'Laravel') }}
+            </a>
+            <nav class="navbar-custom-menu">
+                <ul class="">
+                    <!-- Authentication Links -->
+                    @guest
+                        <li >
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        <li >
+                            <a class="nav-link" href="{{ route('frontend.guest.login') }}">{{ __('Guest Login') }}</a>
+                        </li>
+                        @if (Route::has('register'))
+                            <li >
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif
+                    @else
 
-<!-- Scripts -->
-@stack('before-scripts')
-{{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
-<script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/jquery.validate.min.js') }}"></script>
-@stack('after-scripts')
+                    <li >
+                        <a class="nav-link" href="javascript:;">{{ Auth::user()->name }}</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+                    @endguest
+                </ul>
+            </nav>            
+        </header>  
+        <main class="">
+            @yield('content')
+        </main>
+    </div>
+    <!-- Scripts -->
+    @stack('before-scripts')
+    {{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
+    
+    <script src="{{ asset('js/jquery.min.js') }}" ></script>
+    <script src="{{ asset('js/jquery.validate.min.js') }}" ></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}" ></script>
+    @stack('after-scripts')
+
 </body>
 </html>

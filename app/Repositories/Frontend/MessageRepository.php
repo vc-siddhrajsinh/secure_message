@@ -17,7 +17,6 @@ class MessageRepository extends BaseRepository
     public function createMessage($data)
     {
         try {
-
             $data['ip_addr'] = request()->ip();
             $data['is_read'] = "0";
             $data['user_type'] = (isset(auth()->user()->id) && !empty(auth()->user()->id) )? "1" :"0";
@@ -30,8 +29,13 @@ class MessageRepository extends BaseRepository
             $data['duration'] = now()->addMinute($data['duration'])->timestamp;
             unset($data['_token']);
 
-            $user = $this->create($data);
-            return ['status' => true, "data" => $user];
+            $message = $this->create($data);
+
+            if(auth()->user()) {
+                auth()->user()->messages()->sync($message);
+            }
+            return ['status' => true, "data" => $message];
+
         } catch (Exception  $ex) {
 
             return ['status' => false, "message" => $ex->getMessage()];

@@ -17,6 +17,88 @@ html {
 }
 body, html {
     height: 100%;
-    font-family: Poppins-Regular, sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+.ocean { 
+    // height: 5%;
+    width:100%;
+    position:absolute;
+    bottom:0;
+    left:0;
+    background: #015871;
+    .wave {
+        background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x; 
+        position: absolute;
+        top: -198px;
+        width: 6400px;
+        height: 198px;
+        animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
+        transform: translate3d(0, 0, 0);
+    }
+    .wave:nth-of-type(2) {
+        top: -175px;
+        animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
+        opacity: 1;
+    }
+    @keyframes wave {
+        0% {
+            margin-left: 0;
+        }
+        100% {
+            margin-left: -1600px;
+        }
+    }
+    
+    @keyframes swell {
+        0%, 100% {
+            transform: translate3d(0,-25px,0);
+        }
+        50% {
+            transform: translate3d(0,5px,0);
+        }
+    }
 }
  
+.main-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    max-height: 70px;
+    padding: 15px;
+    color: #ffffff;
+    background: #1cb5e0; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #1cb5e0, #1cb5e0); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #1cb5e0, #1cb5e0);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.26);
+    z-index: 1030;
+    .logo{ 
+        color: #ffffff;
+        border-bottom: 0 solid transparent;
+        -webkit-transition: width 0.3s ease-in-out;
+        -o-transition: width 0.3s ease-in-out;
+        transition: width 0.3s ease-in-out;
+        display: block;
+        float: left;
+        font-size: 20px;
+        text-align: center;
+        font-weight: 300;
+        overflow: hidden;
+
+    }
+    .navbar-custom-menu{
+        float: right;
+        ul{
+            display: flex;
+            align-items: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            li{
+                padding: 0 5px;
+            }
+        }
+
+    }
+}
