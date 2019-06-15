@@ -1,7 +1,7 @@
 @extends('layouts.loginMaster')
 
 @section('content')
-    <section class="page-section">
+    <section class="page-section login-page">
         <div class="login-section ">
             <div class="login-box">
                 <form class="login-form" method="POST" action="{{ route('login') }}" id="login-frm">
@@ -60,8 +60,20 @@
                                 </a>
                         </div>
                     @endif
+                    <div class="clearfix"></div>
+                    <div class="login-form-btn guest-user-btn">
+                        <span class="or-line">OR</span>
+                        <div class="wrap-login-form-btn">
+                            <div class="login-form-bgbtn"></div>
+                            <a class="login-btn" href="{{ route('frontend.guest.login') }}">
+                                {{ __('Guest User') }}
+                            </a>
+                        </div>
+                    </div>
                 </form>
+                
             </div>
+
             <div class="ocean">
                 <div class="wave"></div>
                 <div class="wave"></div>
