@@ -6,8 +6,9 @@
             <div class="msg-dashboard">
                 <span class="logo">{{ __('Edit Message') }}</span>
                 <div class="row">
-                    <form method="put" action="{{route("frontend.messages.update", $message->token)}}" name="msg-frm" id="messages_form"  >
+                    <form method="post" action="{{route("frontend.messages.update", $message->token)}}" name="msg-frm" id="messages_form"  >
                         @csrf
+                        @method('put')
                         @include('message.partial.form')
                     </form>
                 </div>
