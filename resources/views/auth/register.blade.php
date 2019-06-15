@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="page-section">
-        <div class="login-section " style="background-image: url('/img/bg-01.jpg');">
+        <div class="login-section ">
             <div class="login-box">
                     <form class="login-form"  method="POST" action="{{ route('register') }}" id="reg-frm">
                     @csrf
@@ -41,7 +41,7 @@
                     <div class="input-wrap password">
                         <span class="label-input">{{ __('Password') }}</span>
                         <input class="input-box" type="password" name="password" required
-                               class="required @error('password') is-invalid @enderror" placeholder="{{_("Password")}}">
+                               class="required @error('password') is-invalid @enderror" id="password" placeholder="{{_("Password")}}">
                         <span class="focus-input" data-symbol=""></span>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -85,7 +85,29 @@
 @push("after-scripts")
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            jQuery("#reg-frm").validate();
+            $("#reg-frm").validate({
+                rules: {
+                    username: {
+                        required: true,
+                    },
+                    name: {
+                        required: true,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5,
+                    },
+                    password_confirmation: {
+                        required: true,
+                        minlength: 5,
+                        equalTo: "#password"
+
+                    }
+                },errorPlacement: function(){
+                    return false;  // suppresses error message text
+                }
+
+            });
         })
     </script>
 @endpush
