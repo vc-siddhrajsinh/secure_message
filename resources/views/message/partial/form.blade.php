@@ -13,8 +13,8 @@
     @if(!$edit)
 
         @guest
-        <input type="hidden"  name="isPrivate" value="0" class="" />
-        <input type="hidden"  name="type" value="1" class="" />
+        <input type="hidden" name="isPrivate" value="0" class="" />
+        <input type="hidden" name="type" value="1" class="" />
 
     @else
     <div class="input-field">
@@ -39,14 +39,13 @@
         <input type="radio" name="type" value="3" class="form-control">{{__('Video')}}
     </div>
 
-    <div class="input-field">
+    <div class="input-field" style="display: none">
         <span class="label-input">{{ __('Duration') }}</span>
-        <select name="duration" class="input-box" required>
+        <select name="duration" class="input-box" required >
             @php $options =  config("message.duration", []) @endphp
             @if(count($options))
                 @foreach($options as $key => $value)
-
-                    <option value="{{$key}}"> {{$value}}</option>
+                    <option value="{{$key}}" @if($key == "1440") selected="selected" @endif> {{$value}}</option>
                 @endforeach
             @endif
         </select>
