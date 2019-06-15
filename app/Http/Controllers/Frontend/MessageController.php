@@ -7,32 +7,41 @@ use App\Http\Requests\MessageStore;
 use App\Http\Requests\MessageUpdate;
 use App\Repositories\Frontend\MessageRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class MessageController extends Controller
 {
+    /**
+     * @var MessageRepository
+     */
     protected $message;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * MessageController constructor.
+     * @param MessageRepository $message
      */
     public function __construct(MessageRepository $message)
     {
-        $this->middleware('auth')->except("readMessage", "guestLogin", "store", "create");
+        $this->middleware('auth')->except("readMessage", "guestLogin", "store", "create", "show");
         $this->message = $message;
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return mixed
      */
     public function index()
     {
-        $message = $this->message->getAllMessage();
-        return view('message.home')->withMessage($message ?? []);
+        try {
+            $message = $this->message->getAllMessage();
+
+            return view('message.home')->withMessage($message ?? []);
+        } catch (\Exception $ex) {
+            Log::error($ex->getMessage());
+
+            return abort(404);
+        }
+
     }
 
     public function guestLogin()
@@ -103,5 +112,21 @@ class MessageController extends Controller
         } catch (\Exception $ex) {
             return back()->withErrors($ex->getMessage());
         }
+    }
+
+    /**
+     * @param $token
+     */
+    public function show($token)
+    {
+        try {
+
+            return $this->message->getMessageByToken($token);
+        }catch (\Exception $ex) {
+            \Log::error($ex->getMessage());
+
+            return abort(404);
+        }
+
     }
 }

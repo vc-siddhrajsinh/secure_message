@@ -83,4 +83,26 @@ class MessageRepository extends BaseRepository
             return ['status' => false, "message" => $ex->getMessage()];
         }
     }
+
+    public function getMessageByToken($token)
+    {
+        try {
+            $response = $this->where('token',$token)->first();
+
+            if($response) {
+                $message = decrypt($response->content);
+                return view('message.message-view',compact('message'));
+            } else {
+
+                $message = 'This message not longer available';
+                return view('message.message-view',compact('message'));
+            }
+
+        } catch (\Exception $ex) {
+            \Log::error($ex->getMessage());
+
+            $message = 'This message not longer available';
+            return view('message.message-view',compact('message'));
+        }
+    }
 }

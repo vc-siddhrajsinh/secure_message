@@ -26,6 +26,7 @@ Route::group(["namespace" => "Frontend", 'as' => 'frontend.'], function() {
     Route::get('/home', 'MessageController@index')->name('message.index');
 
     Route::resource("messages","MessageController");
+    Route::get("message/{token}","MessageController@show");
     /*Route::get('/message-create', "MessageController@create")->name("message.create");
     Route::post('/message-save', "MessageController@store")->name("message.store");
     Route::get('/message-edit', "MessageController@edit")->name("message.edit");
