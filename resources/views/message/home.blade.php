@@ -5,7 +5,7 @@
         <div class="row">
             @if(isset($messages) && count($messages))
                 @foreach($messages as $message)
-                <div class="col-md-4 noted-card">
+                <div class="col-lg-4 col-md-6 noted-card">
                     <div class="card">
                         <div class="card-header">
                             <h3>{{__("Message")}} </h3>
@@ -15,10 +15,10 @@
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     @php $element = 'input_link_'.$message->id @endphp
-                                    <a class="dropdown-item" data-id="{{ 'input_link_'.$message->id }}" href="javascript:void(0)" onclick="copyLink('@php echo $element@endphp');">Copy Link</a>
+                                    <a class="dropdown-item" data-id="{{ 'input_link_'.$message->id }}" href="javascript:void(0)" onclick="copyLink('@php echo $element@endphp');"><i class="fa fa-clone" aria-hidden="true"></i>  Copy Link</a>
                                     <p style="display: none" id="input_link_{{ $message->id }}" >{{ route('frontend.message.show',[$message->token]) }}</p>
-                                    <a class="dropdown-item" href="{{route("frontend.messages.edit", $message->token)}}" class="btn btn-sm">{{__('Edit')}}</a>
-                                    <a class="dropdown-item" href="javascript:void(0)" onclick="removeMessge(this)" data-id="{{$message->token}}"  class="btn btn-sm">{{__('Delete')}}</a>
+                                    <a class="dropdown-item" href="{{route("frontend.messages.edit", $message->token)}}" class="btn btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  {{__('Edit')}}</a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="removeMessge(this)" data-id="{{$message->token}}"  class="btn btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i> {{__('Delete')}}</a>
                                 </div>
                             </div>                            
                         </div>                    

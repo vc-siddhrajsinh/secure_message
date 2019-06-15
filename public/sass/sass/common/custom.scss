@@ -135,3 +135,26 @@ body, html {
 
     }
 }
+
+@media(max-width:480px){
+    .main-header {
+        .logo{
+            line-height: 20px;
+        } 
+        .navbar-custom-menu {
+            ul {
+                li{
+                    &.user-name-li {
+                        .user-name {
+                            white-space: nowrap;
+                            .fa{
+                                display: block;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
