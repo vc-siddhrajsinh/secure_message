@@ -58,7 +58,7 @@
     </div>
     @endif
     <div class="input-field mb-0">
-        <div class="pull-right">
+        <div class="text-right">
             <button class="msg-submit-btn btn waves-effect" type="submit">
                 {{ __('Submit') }}
             </button>
