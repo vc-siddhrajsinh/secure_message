@@ -13,9 +13,9 @@
         justify-content: center;
         align-items: center;
         padding: 15px;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
+        background: #000046; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #000046, #1cb5e0); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #000046, #1cb5e0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
     .login-box{
         width: 500px;
@@ -126,6 +126,9 @@
                         }
                     } 
                 }
+                .error{
+
+                }
             }
             .forgot-password{
                 text-align: right;
@@ -177,11 +180,11 @@
                         z-index: -1;
                         width: 300%;
                         height: 100%;
-                        background: #a64bf4;
-                        background: -webkit-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
-                        background: -o-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
-                        background: -moz-linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
-                        background: linear-gradient(right, #00dbde, #fc00ff, #00dbde, #fc00ff);
+                        background: #000046;
+                        background: -webkit-linear-gradient(right, #000046, #1cb5e0, #000046, #1cb5e0);
+                        background: -o-linear-gradient(right, #000046, #1cb5e0, #000046, #1cb5e0);
+                        background: -moz-linear-gradient(right, #000046, #1cb5e0, #000046, #1cb5e0);
+                        background: linear-gradient(right, #000046, #1cb5e0, #000046, #1cb5e0);
                         top: 0;
                         left: -100%;
                         -webkit-transition: all 0.4s;

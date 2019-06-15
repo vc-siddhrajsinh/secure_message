@@ -2,7 +2,7 @@
 
 @section('content')
     <section class="page-section">
-        <div class="login-section " style="background-image: url('/img/bg-01.jpg');">
+        <div class="login-section ">
             <div class="login-box">
                 @if(session('errors'))
                     <div class="alert alert-danger" role="alert">
@@ -29,7 +29,7 @@
                     <div class="input-wrap password">
                         <span class="label-input">{{ __('Password') }}</span>
                         <input class="input-box" type="password" name="password" required
-                               class="required @error('password') is-invalid @enderror" placeholder="{{_("Password")}}">
+                               class="required @error('password') is-invalid @enderror" placeholder="{{  __("Password") }}">
                         <span class="focus-input" data-symbol=""></span>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -53,6 +53,10 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="ocean">
+                <div class="wave"></div>
+                <div class="wave"></div>
             </div>
         </div>
     </section>
