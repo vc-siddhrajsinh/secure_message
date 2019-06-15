@@ -1,7 +1,7 @@
 @extends('layouts.loginMaster')
 
 @section('content')
-    <section class="page-section">
+    <section class="page-section login-page">
         <div class="login-section ">
             <div class="login-box">
                     <form class="login-form"  method="POST" action="{{ route('register') }}" id="reg-frm">
@@ -75,6 +75,10 @@
                         </div>
                         @endif
                 </form>
+            </div>
+            <div class="ocean">
+                <div class="wave"></div>
+                <div class="wave"></div>
             </div>
         </div>
     </section>
