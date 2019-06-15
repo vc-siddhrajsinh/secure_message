@@ -1,47 +1,60 @@
-@extends('layouts.app')
+@extends('layouts.loginMaster')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+    <section class="page-section">
+        <div class="login-section " style="background-image: url('/img/bg-01.jpg');">
+            <div class="login-box">
 
-                <div class="card-body">
+                <form class="login-form" method="POST" action="{{ route('password.email') }}" id="reset-frm">
+                    @csrf
+                    <span class="logo">{{ __('Reset Password') }}</span>
+                    @if(session('errors'))
+                        <div class="alert alert-danger" role="alert">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    @endif
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                    <div class="input-wrap username">
+                        <span class="label-input">{{ __('Username') }}</span>
+                        <input class="input-box" type="text" name="username" required
+                               class="required @error('username') is-invalid @enderror"
+                               value="{{ old('username') ??"" }}"
+                               placeholder="{{__('Username')}}">
+                        <span class="focus-input" data-symbol=""></span>
+                        @error('username')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="login-form-btn">
+                        <div class="wrap-login-form-btn">
+                            <div class="login-form-bgbtn"></div>
+                            <button class="login-btn" type="submit">
+                                {{ __('Send Password Reset Link') }}
+                            </button>
                         </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
+                    </div>
+                    @if (Route::has('login'))
+                        <div class="forgot-password ">
+                            <a href="{{ route('login') }}">{{ __('Login') }}</a>
                         </div>
-                    </form>
-                </div>
+                    @endif
+                </form>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 @endsection
+@push("after-scripts")
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery("#reset-frm").validate();
+        })
+    </script>
+@endpush
