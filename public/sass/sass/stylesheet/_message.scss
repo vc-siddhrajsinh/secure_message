@@ -1,0 +1,139 @@
+body{
+    overflow: hidden;
+}
+.page-section{
+    &.message-page{
+        width: 100%;
+        min-height: 100vh;
+        padding: 15px 0;
+        padding-top: 70px;
+        background-color: #222d32;
+        .container-fluid{
+            padding-top: 15px;
+        }
+        .create-section{
+            .msg-dashboard{
+                background: #ffffff;
+                padding-top:20px;
+                padding-bottom: 50px;
+                border-radius: 10px;
+                .heading{
+                    display: block;
+                    font-weight:600;
+                    font-size:28px;
+                    color: #333333;
+                    line-height: 1.2;
+                    text-align: center;
+                    padding-bottom:20px;
+                }
+                .msg-form-box{
+                    padding: 0 20px;
+                    .msg-content-box{
+                        
+                        .input-field{
+                            position: relative;
+                            margin-top: 16px;
+                            margin-bottom: 16px;
+                            
+                            .input-box{
+                                background-color: #ececec;
+                                border: none;
+                                border-bottom: 1px solid #9e9e9e;
+                                border-radius: 0;
+                                outline: none;
+                                height: 2rem;
+                                width: 100%;
+                                font-size: 16px;
+                                margin: 0 0 8px 0;
+                                padding: 0 5px;
+                                box-shadow: none;
+                                transition: box-shadow .3s, border .3s;
+                                &:focus{
+                                    border-bottom: 1px solid #1cb5e0;
+                                    box-shadow: 0 1px 0 0 #1cb5e0;
+                                }
+                                &.error{
+                                    border-color: #e00e0e;
+                                    box-shadow: 0 1px 0 0 #e00e0e;
+                                }
+                            }
+                            textarea{
+                                resize: none;
+                                height:120px !important;
+                            }
+                            .readio-box{
+                                display: block;
+                                .radiobox{
+                                    font-size: 0.8rem;
+                                    color: #9e9e9e;
+                                    display: flex;
+                                    flex-flow: column;
+                                    [type="radio"]:not(:checked), [type="radio"]:checked {
+                                        position: absolute;
+                                        opacity: 0;
+                                        pointer-events: none;
+                                        + span {
+                                            position: relative;
+                                            padding-left: 35px;
+                                            cursor: pointer;
+                                            display: inline-block;
+                                            height: 25px;
+                                            line-height: 25px;
+                                            font-size: 1rem;
+                                            transition: .28s ease;
+                                            user-select: none;
+                                            &:after,&:before {
+                                                content: '';
+                                                position: absolute;
+                                                left: 0;
+                                                top: 0;
+                                                margin: 4px;
+                                                width: 16px;
+                                                height: 16px;
+                                                z-index: 0;
+                                                transition: .28s ease;
+                                                border-radius: 50%;
+                                                border: 2px solid #5a5a5a;
+                                            }
+                                            &:after {
+                                                transform: scale(0);
+                                            }
+                                        }
+                                    }
+                                    [type="radio"]:checked + span:after {
+                                        transform: scale(1.02);
+                                        background-color: #1cb5e0;
+                                        // border: 2px solid #1cb5e0;
+                                    }
+                                }
+                            }
+                            .waves-effect{
+                                border-radius: 2px;
+                                color: #fff;
+                                position: relative;
+                                cursor: pointer;
+                                display: inline-block;
+                                overflow: hidden;
+                                user-select: none;
+                                -webkit-tap-highlight-color: transparent;
+                                vertical-align: middle;
+                                text-transform: capitalize;
+                                letter-spacing: .5px;
+                                border: 0;
+                                z-index: 1;
+                                transition: .3s ease-out;
+                                box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.01), 0 3px 1px -2px rgba(0, 0, 0, 0.02), 0 1px 5px 0 rgba(0, 0, 0, 0.02);
+                                &.msg-submit-btn{
+                                    background-color: #1cb5e0;
+                                }
+                                &.msg-cancel-btn{
+                                    background-color: #212121
+                                }
+                            }                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
