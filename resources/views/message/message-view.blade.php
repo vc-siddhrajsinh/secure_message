@@ -4,7 +4,7 @@
         <div class="container-fluid ">
             <div class="row justify-content-center">
                 @if($message != '')
-                    <div class="col-md-4 noted-card">
+                    <div class="col-md-6 noted-card">
                         <div class="card">
                             <div class="card-header">Message</div>
                             <div class="card-body">
