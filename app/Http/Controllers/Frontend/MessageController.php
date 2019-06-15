@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MessageStore;
 use App\Http\Requests\MessageUpdate;
+use App\Message;
 use App\Repositories\Frontend\MessageRepository;
 use Illuminate\Http\Request;
 
@@ -31,8 +32,8 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $message = $this->message->getAllMessage();
-        return view('message.home')->withMessage($message ?? []);
+        $message = auth()->user()->messages;
+        return view('message.home')->withMessages($message ?? []);
     }
 
     public function guestLogin()
@@ -75,7 +76,7 @@ class MessageController extends Controller
 
     public function create()
     {
-        return view('message.create');
+        return view('message.create')->withEdit(false);
     }
 
     public function edit(Request $request, $id)
@@ -85,7 +86,7 @@ class MessageController extends Controller
             if (!$message['status']) {
                 throw new \Exception("Something went wrong to edit message. Please try after some time.");
             }
-            return view('message.edit')->withMessage($message);
+            return view('message.edit')->withMessage($message['data'])->withEdit(true);;
         } catch (\Exception $ex) {
             return back()->withErrors($ex->getMessage());
         }

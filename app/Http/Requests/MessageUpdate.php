@@ -24,11 +24,7 @@ class MessageUpdate extends FormRequest
     public function rules()
     {
         return [
-            "message" => "required",
-            "isPrivate" => "required|integer|in:0,1",
-            "type" => "required|integer|in:1,2,3",
-            "duration" => "required|integer",
-            "password" => "required_if:isPrivate,1|min:4",
+            "content" => "required",
         ];
     }
 

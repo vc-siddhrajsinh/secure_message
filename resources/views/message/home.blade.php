@@ -17,9 +17,12 @@
                                     <div class="msg-note-header">
                                         <div class="msg-note-content">
                                             <h3> {{__('message:')}}</h3>
-                                            {!! $message->content !!}
+                                            {!! decrypt($message->content) !!}
                                             <h1>{{__('Message Link')}}</h1>
-                                            {!! $message->content !!}
+                                            {!! $message->token !!}
+                                            <a href="{{route("frontend.messages.edit", $message->token)}}" class="btn btn-sm">Edit </a>
+                                            <a href="javascript:void(0)" onclick="removeMessge(this)" data-id="{{$message->token}}"  class="btn btn-sm">delete </a>
+                                            
                                         </div>
                                     </div>
                                 @endforeach
@@ -38,3 +41,32 @@
     </section>
 @endsection
 
+@push("after-scripts")
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+
+        })
+
+        function removeMessge(ele) {
+            if(confirm("Are you sure to delete this message?")){
+                var id = jQuery(ele).data('id');
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'delete',
+                    url: '{{ url('messages') }}'+'/'+id,
+                    success: function (response) {
+                        if (response.status == true)
+                            window.location.reload();
+                        else
+                            console.log(response.message);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
+        }
+    </script>
+@endpush
