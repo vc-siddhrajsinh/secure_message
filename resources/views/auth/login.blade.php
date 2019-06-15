@@ -52,15 +52,12 @@
                             </button>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                     @if (Route::has('register'))
-                        <div class="clearfix"></div>
-                        <div class="login-form-btn">
-                            <div class="wrap-login-form-btn">
-                                <div class="login-form-bgbtn reg-btn"></div>
-                                <a class="login-btn" href="{{route('register')}}">
+                        <div class="register-link">
+                                <a class="register-btn" href="{{route('register')}}">
                                     {{ __('Register') }}
                                 </a>
-                            </div>
                         </div>
                     @endif
                 </form>

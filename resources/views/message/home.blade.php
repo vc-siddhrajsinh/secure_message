@@ -31,25 +31,24 @@
                 @endforeach
             @else
                 <div class="col-md-4 noted-card">
-                    <div class="card-header">
-                        <h3>{{__("Message")}} </h3>
-                        <div class="dropdown">
-                            <button type="button" class="btn  dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-ellipsis-v"></i>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                            </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>{{__("Message")}} </h3>
+                        </div>
+                        <div class="card-body">
+                            {{__("You didn't have any messages")}}
                         </div>
                     </div>
-                    <div class="card-body">
-                        {{__("You didn't have any messages")}}
-                    </div>
-                </div>
-            @endif
-            <div class="create-btn-div">
-                <a class="create-btn" href="{{route("frontend.messages.create")}}" class="btn btn-sm">{{__('Create')}}</a>
             </div>
+            @endif
+            
         </div>
+    </div>
+    <div class="create-btn-div">
+        <a class="create-btn" href="{{route("frontend.messages.create")}}" class="btn btn-sm">
+            <!-- {{__('Create')}} -->
+            +
+        </a>
     </div>
 </section>
 @endsection

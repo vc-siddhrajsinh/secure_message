@@ -41,7 +41,7 @@
                     <div class="input-wrap password">
                         <span class="label-input">{{ __('Password') }}</span>
                         <input class="input-box" type="password" name="password" required
-                               class="required @error('password') is-invalid @enderror" id="password" placeholder="{{_("Password")}}">
+                               class="required @error('password') is-invalid @enderror" id="password" placeholder="{{ __("Password") }}">
                         <span class="focus-input" data-symbol=""></span>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -49,7 +49,7 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="input-wrap password-confirm">
+                    <div class="input-wrap password password-confirm">
                         <span class="label-input">{{ __('Confirm Password') }}</span>
                         <input class="input-box" type="password"  id="password-confirm" name="password_confirmation" required
                                class="required" placeholder="{{ __('Confirm Password') }}">
@@ -66,16 +66,13 @@
                             </button>
                         </div>
                     </div>
+                    <div class="clearfix"></div>
                         @if (Route::has('login'))
-                        <div class="clearfix"></div>
-                            <div class="login-form-btn">
-                                <div class="wrap-login-form-btn">
-                                    <div class="login-form-bgbtn reg-btn"></div>
-                                    <a class="login-btn" href="{{route('login')}}">
-                                        {{ __('Login') }}
-                                    </a>
-                                </div>
-                            </div>
+                        <div class="register-link">
+                                <a class="register-btn" href="{{route('login')}}">
+                                    {{ __('Login') }}
+                                </a>
+                        </div>
                         @endif
                 </form>
             </div>

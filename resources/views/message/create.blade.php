@@ -1,15 +1,18 @@
 @extends('layouts.app')
 @section('content')
-    <section class="page-section">
-        @include('layouts.menu')
-        <div class="login-section " style="background-image: url('/img/bg-01.jpg');">
-            <div class="msg-dashboard">
-                <span class="logo">{{ __('Create Message') }}</span>
-                <div class="row">
-                    <form method="post" action="{{route("frontend.messages.store")}}" name="msg-frm" id="messages_form"  >
-                        @csrf
-                        @include('message.partial.form')
-                    </form>
+    <section class="page-section message-page">
+        <div class="container-fluid ">
+            <div class="row justify-content-center create-section">
+                <div class="col-md-6 ">
+                    <div class="msg-dashboard">
+                        <span class="heading">{{ __('Create Message') }}</span>
+                        <div class="msg-form-box">
+                            <form method="post" action="{{route("frontend.messages.store")}}" name="msg-frm" id="messages_form"  >
+                                @csrf
+                                @include('message.partial.form')
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
