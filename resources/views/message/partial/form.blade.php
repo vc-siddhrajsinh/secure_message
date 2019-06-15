@@ -13,8 +13,9 @@
     @if(!$edit)
 
         @guest
-        <input type="radio" style="display:none" name="isPrivate" value="0" class="" />
-    
+        <input type="hidden"  name="isPrivate" value="0" class="" />
+        <input type="hidden"  name="type" value="1" class="" />
+
     @else
     <div class="input-field">
         <span class="label-input">{{ __('Privacy') }}</span>

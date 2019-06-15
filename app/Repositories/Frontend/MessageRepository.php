@@ -114,7 +114,7 @@ class MessageRepository extends BaseRepository
         } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
 
-            $message = 'This message not longer available';
+            $message = '';
             return view('message.message-view',compact('message'));
         }
     }
