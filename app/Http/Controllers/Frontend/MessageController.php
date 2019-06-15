@@ -77,6 +77,7 @@ class MessageController extends Controller
             }
             return redirect()->route("frontend.guest.login")->withFlashSuccess("Message created successfully.")->withMessage($message['data']);
         } catch (\Exception $ex) {
+            \Log::error($ex->getMessage());
             return back()->withErrors($ex->getMessage());
         }
     }
@@ -92,6 +93,7 @@ class MessageController extends Controller
             $message = $this->message->updateMessage($id, $request->all());
             return redirect()->route("frontend.messages.index")->withFlashSuccess("Message updates successfully.");
         } catch (\Exception $ex) {
+            \Log::error($ex->getMessage());
             return back()->withErrors($ex->getMessage());
         }
     }
@@ -101,7 +103,13 @@ class MessageController extends Controller
      */
     public function create()
     {
-        return view('message.create')->withEdit(false);
+        try{
+            return view('message.create')->withEdit(false);
+        }catch (\Exception $ex) {
+            \Log::error($ex->getMessage());
+            return abort(404);
+        }
+
     }
 
     /**
@@ -118,6 +126,7 @@ class MessageController extends Controller
             }
             return view('message.edit')->withMessage($message['data'])->withEdit(true);;
         } catch (\Exception $ex) {
+            \Log::error($ex->getMessage());
             return back()->withErrors($ex->getMessage());
         }
 
@@ -131,13 +140,17 @@ class MessageController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
+            if(!$request->ajax()){
+                return redirect()->route("frontend.messages.index")->withErrors("This actions not allowed.");
+            }
             $message = $this->message->deleteMessageByField($id, "token");
             if (!$message['status']) {
-                throw new \Exception("Something went wrong to edit message. Please try after some time.");
+                throw new \Exception("Something went wrong to delete message. Please try after some time.");
             }
-            return view('message.edit')->withMessage($message);
+            return response()->json(['status'=> true, "message" => "Message deleted successfully."]);
         } catch (\Exception $ex) {
-            return back()->withErrors($ex->getMessage());
+            \Log::error($ex->getMessage());
+            return response()->json(['status'=> false, "message" => $ex->getMessage()]);
         }
     }
 
@@ -152,7 +165,6 @@ class MessageController extends Controller
             return $this->message->getMessageByToken($token);
         }catch (\Exception $ex) {
             \Log::error($ex->getMessage());
-
             return abort(404);
         }
 

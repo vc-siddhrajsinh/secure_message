@@ -79,13 +79,14 @@ class MessageRepository extends BaseRepository
     {
         try{
             $current=  $this->getMessageByField($value, $column);
+
             if(!$current['status']) {
-                throw new \Exception("Something went wrong to edit message. Please try after some time.");
+                throw new \Exception("Something went wrong to delete message. Please try after some time.");
+            }
+            if(auth()->user()) {
+                auth()->user()->messages()->detach($current['data']->id);
             }
             $message = $this->deleteById($current['data']->id);
-            if(auth()->user()) {
-                auth()->user()->messages()->detech($message);
-            }
             return ['status' => true, "data" => $message];
         } catch (Exception  $ex) {
             return ['status' => false, "message" => $ex->getMessage()];
