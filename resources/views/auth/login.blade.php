@@ -4,16 +4,16 @@
     <section class="page-section">
         <div class="login-section " style="background-image: url('/img/bg-01.jpg');">
             <div class="login-box">
-                @if(session('errors'))
-                    <div class="alert alert-danger" role="alert">
-                        @foreach ($errors->all() as $error)
-                            <div>{{ $error }}</div>
-                        @endforeach
-                    </div>
-                @endif
                 <form class="login-form" method="POST" action="{{ route('login') }}" id="login-frm">
                     @csrf
-                    <span class="logo">Login</span>
+                    <span class="logo">{{ __('Login') }}</span>
+                    @if(session('errors'))
+                        <div class="input-wrap alert alert-danger" role="alert">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    @endif
                     <div class="input-wrap username">
                         <span class="label-input">{{ __('Username') }}</span>
                         <input class="input-box" type="text" name="username" required
@@ -38,11 +38,11 @@
                         @enderror
                     </div>
 
-                    @if (Route::has('password.request'))
+                    {{--@if (Route::has('password.request'))
                         <div class="forgot-password ">
                             <a href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
                         </div>
-                    @endif
+                    @endif--}}
 
                     <div class="login-form-btn">
                         <div class="wrap-login-form-btn">
@@ -52,6 +52,17 @@
                             </button>
                         </div>
                     </div>
+                    @if (Route::has('register'))
+                        <div class="clearfix"></div>
+                        <div class="login-form-btn">
+                            <div class="wrap-login-form-btn">
+                                <div class="login-form-bgbtn reg-btn"></div>
+                                <a class="login-btn" href="{{route('register')}}">
+                                    {{ __('Register') }}
+                                </a>
+                            </div>
+                        </div>
+                    @endif
                 </form>
             </div>
         </div>
