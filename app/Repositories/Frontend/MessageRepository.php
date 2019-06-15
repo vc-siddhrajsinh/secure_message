@@ -5,6 +5,7 @@ namespace App\Repositories\Frontend;
 use App\Repositories\BaseRepository;
 use App\Message;
 use Exception;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 class MessageRepository extends BaseRepository
@@ -112,5 +113,29 @@ class MessageRepository extends BaseRepository
             $message = 'This message not longer available';
             return view('message.message-view',compact('message'));
         }
+    }
+
+    /**
+     * @param $request
+     * @return array
+     */
+    public function createMessageWithoutStore($request)
+    {
+        try {
+            $data = [];
+            $token = (string) Str::uuid();
+            $data['content'] = $request->content ?? '';
+            $data['isPrivate'] = $request->isPrivate ?? '';
+            $data['type'] = $request->type ?? '';
+            $data['duration'] = now()->addMinute($request->duration)->timestamp ?? '';
+            $data['password'] = $data['password'] ?? '';
+            $data['token'] = $token;
+
+            return ['status' => true, "data" => encrypt(json_encode($data))];
+
+        } catch (\Exception $ex) {
+            $ex->getMessage();
+        }
+
     }
 }

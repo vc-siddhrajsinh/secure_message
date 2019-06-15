@@ -4,7 +4,7 @@
     <section class="page-section">
         @include('layouts.menu')
 
-        <div class="login-section " style="background-image: url('/img/bg-01.jpg');">
+        <div class="login-section " >
             <div class="msg-dashboard">
                     <span class="logo">{{ __('Dashboard') }}</span>
                     @include("layouts.alert")
@@ -12,24 +12,14 @@
                     <a class="btn btn-primary pull-right" href="{{route("frontend.messages.create")}}" >{{__('Create Message')}}</a>
                     <div class="content msg-header">
                         <div class="msg-list">
-                            @if(isset($message) && count($message))
+                            <div class="msg-note-header">
+                                <div class="msg-note-content">
+                                    <h3> {{__('message:')}}</h3>
+                                    {{ nl2br(route('frontend.messages.show',[$token])) }}
+                                    <h1>{{__('Message Link')}}</h1>
 
-                                    <div class="msg-note-header">
-                                        <div class="msg-note-content">
-                                            <h3> {{__('message:')}}</h3>
-                                            {!! decrypt($message->content) !!}
-                                            <h1>{{__('Message Link')}}</h1>
-                                            {!! $message->token !!}
-                                        </div>
-                                    </div>
-
-                            @else
-                                <div class="msg-note-header">
-                                    <span>
-                                        {{__("You didn't have any messages")}}
-                                    </span>
                                 </div>
-                            @endif
+                            </div>
                         </div>
                     </div>
                 </div>

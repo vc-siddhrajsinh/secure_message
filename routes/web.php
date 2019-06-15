@@ -18,7 +18,7 @@
 
 
 Route::group(["namespace" => "Frontend", 'as' => 'frontend.'], function() {
-    Route::get('/guest', "MessageController@guestLogin")->name("guest.login");
+    Route::get('/guest/{token?}', "MessageController@guestLogin")->name("guest.login");
 //    Route::get('/guest/dashboard', "MessageController@guestDashboard")->name("guest.dashboard");
 
     Route::get('/', "MessageController@index");
