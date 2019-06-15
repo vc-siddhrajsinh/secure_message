@@ -1,10 +1,30 @@
 @extends('layouts.app')
 @section('content')
+<section class="page-section home-page">
+    <div class="container-fluid ">
+        <div class="row justify-content-center">
+            <div class="col-md-4 noted-card">
+                <div class="card">
+                    <div class="card-header">Dashboard</div>
 
-    <section class="page-section">
-        @include('layouts.menu')
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
-        <div class="login-section " style="background-image: url('/img/bg-01.jpg');">
+                        You are logged in!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- <section class="page-section home-page">
+        
+
+        <div class="login-section " >
             <div class="msg-dashboard">
                     <span class="logo">{{ __('Dashboard') }}</span>
                     @include("layouts.alert")
@@ -35,6 +55,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 @endsection
 

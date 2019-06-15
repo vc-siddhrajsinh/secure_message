@@ -7,8 +7,14 @@ body{
         min-height: 100vh;
         padding: 15px 0;
         padding-top: 70px;
+        background-color: #222d32;
         .container-fluid{
             padding-top: 15px;
+        }
+        .noted-card{
+            .card{
+                border-radius: 10px;
+            }
         }
     }
 }
