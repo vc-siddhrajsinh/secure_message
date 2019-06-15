@@ -101,21 +101,23 @@ class MessageRepository extends BaseRepository
 
             if($response) {
                 $message = decrypt($response->content);
-                if(!auth()->user()){
+                if((!auth()->user()) && $response->isPrivate == '0' ){
                     $response->delete();
+                    $response= '';
                 }
-                return view('message.message-view',compact('message'));
+                return view('message.message-view',compact('message','response'));
             } else {
 
                 $message = 'This message not longer available';
-                return view('message.message-view',compact('message'));
+                $response= '';
+                return view('message.message-view',compact('message','response'));
             }
 
         } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
-
             $message = '';
-            return view('message.message-view',compact('message'));
+            $response= '';
+            return view('message.message-view',compact('message', 'response'));
         }
     }
 
