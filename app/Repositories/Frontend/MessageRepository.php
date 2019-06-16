@@ -10,11 +10,18 @@ use Illuminate\Support\Str;
 
 class MessageRepository extends BaseRepository
 {
+    /**
+     * @return mixed|string
+     */
     public function model()
     {
         return Message::class;
     }
 
+    /**
+     * @param $data
+     * @return array
+     */
     public function createMessage($data)
     {
         try {
@@ -35,15 +42,19 @@ class MessageRepository extends BaseRepository
             if(auth()->user()) {
                 auth()->user()->messages()->attach($message);
             }
+
             return ['status' => true, "data" => $message];
 
         } catch (Exception  $ex) {
-
             return ['status' => false, "message" => $ex->getMessage()];
         }
     }
 
-
+    /**
+     * @param $token
+     * @param $data
+     * @return array
+     */
     public function updateMessage($token, $data)
     {
         try {
@@ -60,12 +71,20 @@ class MessageRepository extends BaseRepository
         }
     }
 
-
+    /**
+     * @param array $params
+     * @return MessageRepository[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function getAllMessage($params = ["*"])
     {
         return $this->where("id", auth()->user()->id )->get($params);
     }
 
+    /**
+     * @param $value
+     * @param string $column
+     * @return array
+     */
     public function getMessageByField($value, $column = "id" )
     {
         try{
@@ -76,6 +95,11 @@ class MessageRepository extends BaseRepository
         }
     }
 
+    /**
+     * @param $value
+     * @param string $column
+     * @return array
+     */
     public function deleteMessageByField($value, $column = "id" )
     {
         try{
@@ -88,12 +112,17 @@ class MessageRepository extends BaseRepository
                 auth()->user()->messages()->detach($current['data']->id);
             }
             $message = $this->deleteById($current['data']->id);
+
             return ['status' => true, "data" => $message];
         } catch (Exception  $ex) {
             return ['status' => false, "message" => $ex->getMessage()];
         }
     }
 
+    /**
+     * @param $token
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getMessageByToken($token)
     {
         try {
@@ -101,10 +130,12 @@ class MessageRepository extends BaseRepository
 
             if($response) {
                 $message = decrypt($response->content);
-                if((!auth()->user()) && $response->isPrivate == '0' ){
+
+                if((!auth()->user()) && $response->isPrivate == '0' ) {
                     $response->delete();
                     $response= '';
                 }
+
                 return view('message.message-view',compact('message','response'));
             } else {
 
@@ -117,6 +148,7 @@ class MessageRepository extends BaseRepository
             \Log::error($ex->getMessage());
             $message = '';
             $response= '';
+
             return view('message.message-view',compact('message', 'response'));
         }
     }

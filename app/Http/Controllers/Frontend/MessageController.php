@@ -45,6 +45,7 @@ class MessageController extends Controller
     }
 
     /**
+     * @param string $token
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function guestLogin($token = '')
@@ -103,7 +104,7 @@ class MessageController extends Controller
     }
 
     /**
-     * @return mixed
+     *
      */
     public function create()
     {
@@ -125,12 +126,15 @@ class MessageController extends Controller
     {
         try {
             $message = $this->message->getMessageByField($id, "token");
+
             if (!$message['status']) {
                 throw new \Exception("Something went wrong to edit message. Please try after some time.");
             }
-            return view('message.edit')->withMessage($message['data'])->withEdit(true);;
+
+            return view('message.edit')->withMessage($message['data'])->withEdit(true);
         } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
+
             return back()->withErrors($ex->getMessage());
         }
 
@@ -139,7 +143,7 @@ class MessageController extends Controller
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request, $id)
     {
@@ -148,12 +152,15 @@ class MessageController extends Controller
                 return redirect()->route("frontend.messages.index")->withErrors("This actions not allowed.");
             }
             $message = $this->message->deleteMessageByField($id, "token");
+
             if (!$message['status']) {
                 throw new \Exception("Something went wrong to delete message. Please try after some time.");
             }
+
             return response()->json(['status' => true, "message" => "Message deleted successfully."]);
         } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
+
             return response()->json(['status' => false, "message" => $ex->getMessage()]);
         }
     }
@@ -169,12 +176,16 @@ class MessageController extends Controller
 
         } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
+
             return abort(404);
         }
 
     }
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
+     */
     public function validatePassword(Request $request)
     {
         try {
@@ -182,9 +193,11 @@ class MessageController extends Controller
                 return redirect()->route("frontend.messages.index")->withErrors("This actions not allowed.");
             }
             $message = $this->message->getById($request->id);
+
             if (!$message) {
                 throw new \Exception("Something went wrong. Please try after some time.");
             }
+
             if ($request->password != decrypt($message->password)) {
                 throw new \Exception("Password didn't match. Please enter valid password.");
             }
@@ -192,6 +205,7 @@ class MessageController extends Controller
             return response()->json(['status' => true, "message" => "Password Validate successfully."]);
         } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
+
             return response()->json(['status' => false, "message" => $ex->getMessage()]);
         }
 
