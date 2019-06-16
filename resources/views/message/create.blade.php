@@ -35,7 +35,11 @@
 @push("after-scripts")
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            jQuery("#messages_form").validate();
+            jQuery("#messages_form").validate({
+                errorPlacement: function () {
+                    return false;
+                }
+            });
 
             jQuery(".isPrivate").click(function () {
 

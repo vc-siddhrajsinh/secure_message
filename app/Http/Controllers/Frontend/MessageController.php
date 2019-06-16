@@ -24,7 +24,7 @@ class MessageController extends Controller
      */
     public function __construct(MessageRepository $message)
     {
-        $this->middleware('auth')->except("readMessage", "guestLogin", "store", "create", "show");
+        $this->middleware('auth')->except("readMessage", "guestLogin", "store", "create", "show", "validatePassword");
         $this->message = $message;
     }
 
@@ -49,7 +49,7 @@ class MessageController extends Controller
      */
     public function guestLogin($token = '')
     {
-        return view('message.guestIndex',compact('token'));
+        return view('message.guestIndex', compact('token'));
     }
 
     /**
@@ -69,14 +69,14 @@ class MessageController extends Controller
     {
         try {
             $message = $this->message->createMessage($request->all());
-            
+
             if (!$message['status']) {
                 throw new \Exception("Something went wrong to create message. Please try after some time.");
             }
 
-            $link = route('frontend.message.show',$message['data']['token']);
+            $link = route('frontend.message.show', $message['data']['token']);
 
-            session()->put('link',$link);
+            session()->put('link', $link);
             return redirect()->route('frontend.messages.create');
 
         } catch (\Exception $ex) {
@@ -107,9 +107,9 @@ class MessageController extends Controller
      */
     public function create()
     {
-        try{
+        try {
             return view('message.create')->withEdit(false);
-        }catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
             return abort(404);
         }
@@ -144,17 +144,17 @@ class MessageController extends Controller
     public function destroy(Request $request, $id)
     {
         try {
-            if(!$request->ajax()){
+            if (!$request->ajax()) {
                 return redirect()->route("frontend.messages.index")->withErrors("This actions not allowed.");
             }
             $message = $this->message->deleteMessageByField($id, "token");
             if (!$message['status']) {
                 throw new \Exception("Something went wrong to delete message. Please try after some time.");
             }
-            return response()->json(['status'=> true, "message" => "Message deleted successfully."]);
+            return response()->json(['status' => true, "message" => "Message deleted successfully."]);
         } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
-            return response()->json(['status'=> false, "message" => $ex->getMessage()]);
+            return response()->json(['status' => false, "message" => $ex->getMessage()]);
         }
     }
 
@@ -167,9 +167,32 @@ class MessageController extends Controller
         try {
             return $this->message->getMessageByToken($token);
 
-        }catch (\Exception $ex) {
+        } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
             return abort(404);
+        }
+
+    }
+
+
+    public function validatePassword(Request $request)
+    {
+        try {
+            if (!$request->ajax()) {
+                return redirect()->route("frontend.messages.index")->withErrors("This actions not allowed.");
+            }
+            $message = $this->message->getById($request->id);
+            if (!$message) {
+                throw new \Exception("Something went wrong. Please try after some time.");
+            }
+            if ($request->password != decrypt($message->password)) {
+                throw new \Exception("Password didn't match. Please enter valid password.");
+            }
+
+            return response()->json(['status' => true, "message" => "Password Validate successfully."]);
+        } catch (\Exception $ex) {
+            \Log::error($ex->getMessage());
+            return response()->json(['status' => false, "message" => $ex->getMessage()]);
         }
 
     }

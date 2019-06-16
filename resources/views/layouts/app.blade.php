@@ -24,7 +24,7 @@
                 <ul class="">
                     <!-- Authentication Links -->
                     @guest
-                        <li >
+                        {{--<li >
                             <a class="nav-link" href="{{ route('frontend.guest.login') }}">{{ __('Guest Login') }}</a>
                         </li>
                         <li >
@@ -35,7 +35,7 @@
                             <li >
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
-                        @endif
+                        @endif--}}
                     @else
 
                     <li class="user-name-li">
