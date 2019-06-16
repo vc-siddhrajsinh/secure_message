@@ -4,14 +4,18 @@
         <div class="container-fluid ">
             <div class="row justify-content-center create-section">
                 <div class="col-md-6 ">
-                    <div class="msg-dashboard">
+                    <div class="msg-dashboard ">
 
                        @if(session()->has('link'))
-                           <h1>HERE IS THE URL THAT WILL ALLOW YOU TO REVEAL YOUR MESSAGE</h1>
-                            <h3 id="input_link_0">{{ session()->get('link') }}</h3>
-                           <button class="btn btn-primary" onclick="copyLink('input_link_0')">Click to Copy</button>
-                           {{ session()->forget('link') }}
-                            <a class="btn btn-primary" href="{{ route('frontend.messages.create') }}">Create Message</a>
+                            <div class="copy-link-box">
+                                <h3>here is the url that will allow you to reveal your message</h3>
+                                    <p id="input_link_0">{{ session()->get('link') }}</p>
+                                <div class="text-right">
+                                <button class="btn btn-primary" onclick="copyLink('input_link_0')">Copy</button>
+                                {{ session()->forget('link') }}
+                                    <a class="btn btn-primary" href="{{ route('frontend.messages.create') }}">Create Message</a>
+                                </div>
+                            </div>
                        @else
                         <span class="heading">{{ __('Create Message') }}</span>
                         <div class="msg-form-box">
@@ -31,7 +35,11 @@
 @push("after-scripts")
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            jQuery("#messages_form").validate();
+            jQuery("#messages_form").validate({
+                errorPlacement: function () {
+                    return false;
+                }
+            });
 
             jQuery(".isPrivate").click(function () {
 

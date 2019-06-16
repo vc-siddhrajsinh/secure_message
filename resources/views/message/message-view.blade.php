@@ -4,9 +4,7 @@
         <div class="container-fluid ">
             <div class="row justify-content-center">
                 @if($message != '')
-                    {{$message}}
                     @guest
-
                         @if(!empty($response) && isset($response->id))
                             @if(isset($response->user_type) && $response->user_type != '0' && $response->isPrivate == '1')
                                 <div class="col-md-4 noted-card" id="user_auth">
@@ -42,14 +40,13 @@
                                     </div>
                                 </div>
                             @endif
-                            @else
+                        @else
                             <div class="col-md-4 noted-card"  id="user_msg">
                                 <div class="card">
                                     <div class="card-header">Message</div>
                                     <div class="card-body">
                                         {{ $message }}
                                     </div>
-
                                 </div>
                             </div>
                         @endif
@@ -64,7 +61,6 @@
                             </div>
                         </div>
                     @endguest
-
                 @else
                     <div class="no-data">
                         <div class="no-data-box">
