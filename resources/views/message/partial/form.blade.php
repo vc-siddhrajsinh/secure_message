@@ -39,9 +39,10 @@
         <input type="radio" name="type" value="3" class="form-control">{{__('Video')}}
     </div>
 
-    <div class="input-field" style="display: none">
+    <div class="input-field" @guest style="display: none" @endguest >
         <span class="label-input">{{ __('Duration') }}</span>
         <select name="duration" class="input-box" required >
+             
             @php $options =  config("message.duration", []) @endphp
             @if(count($options))
                 @foreach($options as $key => $value)
