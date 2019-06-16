@@ -7,22 +7,30 @@
                     @guest
                         @if(!empty($response) && isset($response->id))
                             @if(isset($response->user_type) && $response->user_type != '0' && $response->isPrivate == '1')
-                                <div class="col-md-4 noted-card" id="user_auth">
+                                <div class="col-md-6 col-lg-4 noted-card" id="user_auth">
                                     <div class="card">
-                                        <div class="card-header">Message</div>
+                                        <div class="card-header"><h3>Message </h3></div>
                                         <div class="card-body">
-                                            <h3 >This is private message. Please verify yourself.</h3>
-                                            <input type="password" name="password" id="user_password" required/>
-                                            <a class="btn btn-primary " data-id="{{$response->id}}"
-                                                    onclick="validatePassword(this);"> Submit
-                                            </a>
+                                            <div class="card-form">
+                                                <h3 >This is private message.</h3>
+                                                <div class="input-field" id="password-div">
+                                                    <input class="input-box" type="password" name="password" id="user_password" placeholder="{{  __("Password") }}" required/>
+                                                </div>
+                                                <div class="input-field mb-0">
+                                                    <div class="text-right">
+                                                        <a class="btn waves-effect" data-id="{{$response->id}}"  onclick="validatePassword(this);"> Submit
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="col-md-4 noted-card" style="display: none;" id="user_msg">
+                                <div class="col-md-6 col-lg-4 noted-card" style="display: none;" id="user_msg">
                                     <div class="card">
-                                        <div class="card-header">Message</div>
+                                        <div class="card-header"><h3>Message </h3></div>
                                         <div class="card-body">
                                             {{ $message }}
                                         </div>
@@ -30,9 +38,9 @@
                                     </div>
                                 </div>
                             @else
-                                <div class="col-md-4 noted-card"  id="user_msg">
+                                <div class="col-md-6 col-lg-4 noted-card"  id="user_msg">
                                     <div class="card">
-                                        <div class="card-header">Message</div>
+                                        <div class="card-header"><h3>Message </h3></div>
                                         <div class="card-body">
                                             {{ $message }}
                                         </div>
@@ -41,9 +49,9 @@
                                 </div>
                             @endif
                         @else
-                            <div class="col-md-4 noted-card"  id="user_msg">
+                            <div class="col-md-6 col-lg-4 noted-card"  id="user_msg">
                                 <div class="card">
-                                    <div class="card-header">Message</div>
+                                    <div class="card-header"><h3>Message </h3></div>
                                     <div class="card-body">
                                         {{ $message }}
                                     </div>
@@ -51,9 +59,9 @@
                             </div>
                         @endif
                     @else
-                        <div class="col-md-4 noted-card">
+                        <div class="col-md-6 col-lg-4 noted-card">
                             <div class="card">
-                                <div class="card-header">Message</div>
+                                <div class="card-header"><h3>Message </h3></div>
                                 <div class="card-body">
                                     {{ $message }}
                                 </div>
@@ -91,9 +99,15 @@
                     if (response.status == true) {
                         $("#user_auth").hide();
                         $("#user_msg").show();
+                        
                     } else {
-                        alert(response.message)
+                        // alert(response.message)
                     }
+                    var x = document.getElementById("snackbar");
+                    x.className = "show";
+                    $("#snackbar").html(response.message);
+                    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                    
                 },
                 error: function (err) {
                     console.log(err);

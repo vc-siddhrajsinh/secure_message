@@ -61,6 +61,7 @@
             @yield('content')
         </main>
     </div>
+    <div id="snackbar">Copy to clipboard</div>
     <!-- Scripts -->
     @stack('before-scripts')
     {{--<script src="{{ asset('js/app.js') }}" defer></script>--}}

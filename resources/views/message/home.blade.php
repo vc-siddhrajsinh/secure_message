@@ -23,7 +23,7 @@
                             </div>                            
                         </div>                    
                         <div class="card-body">
-                            {!! decrypt($message->content) !!}
+                            {!!  \Str::words(decrypt($message->content), 50) !!}
                 
                         </div>
                     </div>
