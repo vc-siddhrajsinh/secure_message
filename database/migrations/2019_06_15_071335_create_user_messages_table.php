@@ -15,8 +15,10 @@ class CreateUserMessagesTable extends Migration
     {
         Schema::create('user_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('user_id')->comment("user id");
-            $table->unsignedInteger('message_id')->comment("message id");
+            $table->unsignedBigInteger('user_id')->comment("user id");
+            $table->unsignedBigInteger('message_id')->comment("message id");
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('message_id')->references('id')->on('messages')->onDelete('cascade');
         });
     }
 
