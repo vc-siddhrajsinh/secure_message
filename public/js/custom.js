@@ -7,5 +7,5 @@ function copyLink(element) {
     var x = document.getElementById("snackbar");
     x.className = "show";
     $("#snackbar").html("Copy to clipboard");
-    setTimeout(function(){ x.className = x.className.replace("show", response.message); }, 3000);
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 }
