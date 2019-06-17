@@ -62,10 +62,17 @@
                     url: '{{ url('messages') }}'+'/'+id,
                     success: function (response) {
                         if (response.status == true) {
-                            alert(response.message)
-                            window.location.reload();
+                            //alert(response.message)
+                            var x = document.getElementById("snackbar");
+                            x.className = "show";
+                            $("#snackbar").html(response.message);
+                            setTimeout(function(){ x.className = x.className.replace("show", ""); window.location.reload();}, 2000);
+
                         }  else {
-                            alert(response.message)
+                            var x = document.getElementById("snackbar");
+                            x.className = "show";
+                            $("#snackbar").html(response.message);
+                            setTimeout(function(){ x.className = x.className.replace("show", "");}, 2000);
                         }
                     },
                     error: function (err) {
