@@ -17,7 +17,7 @@
                                     @php $element = 'input_link_'.$message->id @endphp
                                     <a class="dropdown-item" data-id="{{ 'input_link_'.$message->id }}" href="javascript:void(0)" onclick="copyLink('@php echo $element@endphp');"><i class="fa fa-clone" aria-hidden="true"></i>  Copy Link</a>
                                     <p style="display: none" id="input_link_{{ $message->id }}" >{{ route('frontend.message.show',[$message->token]) }}</p>
-                                    <a class="dropdown-item" href="{{route("frontend.messages.edit", $message->token)}}" class="btn btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  {{__('Edit')}}</a>
+                                     <a class="dropdown-item" href="{{route("frontend.messages.edit", $message->token)}}" class="btn btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  {{__('Edit')}}</a>
                                     <a class="dropdown-item" href="javascript:void(0)" onclick="removeMessge(this)" data-id="{{$message->token}}"  class="btn btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i> {{__('Delete')}}</a>
                                 </div>
                             </div>                            
@@ -41,12 +41,7 @@
             
         </div>
     </div>
-    <div class="create-btn-div">
-        <a class="create-btn" href="{{route("frontend.messages.create")}}" class="btn btn-sm">
-            <!-- {{__('Create')}} -->
-            +
-        </a>
-    </div>
+    @include('message.partial.create_button')
 </section>
 @endsection
 @push("after-scripts")
@@ -62,17 +57,14 @@
                     url: '{{ url('messages') }}'+'/'+id,
                     success: function (response) {
                         if (response.status == true) {
-                            //alert(response.message)
-                            var x = document.getElementById("snackbar");
-                            x.className = "show";
-                            $("#snackbar").html(response.message);
-                            setTimeout(function(){ x.className = x.className.replace("show", ""); window.location.reload();}, 2000);
-
+                            toasterMessage(response.message);
+                            window.location.reload();
                         }  else {
-                            var x = document.getElementById("snackbar");
+                            toasterMessage(response.message);
+                            /*var x = document.getElementById("snackbar");
                             x.className = "show";
                             $("#snackbar").html(response.message);
-                            setTimeout(function(){ x.className = x.className.replace("show", "");}, 2000);
+                            setTimeout(function(){ x.className = x.className.replace("show", "");}, 2000);*/
                         }
                     },
                     error: function (err) {

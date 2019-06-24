@@ -42,16 +42,15 @@
             });
 
             jQuery(".isPrivate").click(function () {
+                if($(this).is(":checked")){
+                    jQuery("#password-div").show();
+                    jQuery("#password").addClass("required");
 
-               if (jQuery(this).val() != 1){
-                   jQuery("#password-div").hide();
-                   jQuery("#password").removeClass("required");
-                   jQuery("#password").val("");
-               } else {
-                   jQuery("#password-div").show();
-                   jQuery("#password").addClass("required");
-               }
-
+                } else {
+                    jQuery("#password-div").hide();
+                    jQuery("#password").removeClass("required");
+                    jQuery("#password").val("");
+                }
             });
         })
 

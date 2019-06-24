@@ -46,11 +46,12 @@ class MessageController extends Controller
 
     /**
      * @param string $token
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Http\RedirectResponse
      */
+
     public function guestLogin($token = '')
     {
-        return view('message.guestIndex', compact('token'));
+        return redirect()->route("frontend.messages.create");
     }
 
     /**
@@ -201,11 +202,9 @@ class MessageController extends Controller
             if ($request->password != decrypt($message->password)) {
                 throw new \Exception("Password didn't match. Please enter valid password.");
             }
-
-            return response()->json(['status' => true, "message" => "Password Validate successfully."]);
+            return response()->json(['status' => true, "message" => "Password Validate successfully." ,"content" =>  decrypt($message->content)]);
         } catch (\Exception $ex) {
             \Log::error($ex->getMessage());
-
             return response()->json(['status' => false, "message" => $ex->getMessage()]);
         }
 
